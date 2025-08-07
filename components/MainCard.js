@@ -6,35 +6,47 @@ export const MainCard = ({
   city,
   country,
   description,
-  iconName,
+  iconCode,
   unitSystem,
-  weatherData,
+  temperature,
+  feels_like,
+  humidity,
+  time,
 }) => {
+  let isDay = true;
+  if (time) {
+    const hour = new Date(time).getHours();
+    isDay = hour >= 6 && hour < 20;
+  }
+  const iconName =
+    iconCode !== undefined ? `${iconCode}${isDay ? "d" : "n"}` : "0d";
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.location}>
         {city}, {country}
       </h1>
       <p className={styles.description}>{description}</p>
-      <Image
+      <img
         width="300px"
         height="300px"
         src={`/icons/${iconName}.svg`}
         alt="weatherIcon"
       />
       <h1 className={styles.temperature}>
-        {unitSystem == "metric"
-          ? Math.round(weatherData.main.temp)
-          : Math.round(ctoF(weatherData.main.temp))}
-        °{unitSystem == "metric" ? "C" : "F"}
+        {unitSystem === "metric"
+          ? Math.round(temperature)
+          : Math.round(ctoF(temperature))}
+        °{unitSystem === "metric" ? "C" : "F"}
       </h1>
       <p>
-        Feels like{" "}
-        {unitSystem == "metric"
-          ? Math.round(weatherData.main.feels_like)
-          : Math.round(ctoF(weatherData.main.feels_like))}
-        °{unitSystem == "metric" ? "C" : "F"}
+        Ressentie{" "}
+        {unitSystem === "metric"
+          ? Math.round(feels_like)
+          : Math.round(ctoF(feels_like))}
+        °{unitSystem === "metric" ? "C" : "F"}
       </p>
+      <p>{humidity}% Humidité</p>
     </div>
   );
 };
+export default MainCard;
