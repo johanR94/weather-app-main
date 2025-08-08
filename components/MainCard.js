@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ctoF } from "../services/converters";
 import styles from "./MainCard.module.css";
 

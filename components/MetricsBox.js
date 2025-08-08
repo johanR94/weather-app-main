@@ -1,9 +1,10 @@
-import { degToCompass } from "../services/converters";
+import { degToCompass, degToCompassMetric } from "../services/converters";
 import {
   getTime,
   getAMPM,
   getVisibility,
   getWindSpeed,
+  getPressure,
 } from "../services/helpers";
 import { MetricsCard } from "./MetricsCard";
 import styles from "./MetricsBox.module.css";
@@ -18,13 +19,13 @@ export const MetricsBox = ({ weatherData, unitSystem }) => {
   return (
     <div className={styles.wrapper}>
       <MetricsCard
-        title={"Humidity"}
+        title={unitSystem === "metric" ? "Humidité" : "Humidity"}
         iconSrc={"/icons/humidity.png"}
         metric={current.relative_humidity_2m}
         unit={"%"}
       />
       <MetricsCard
-        title={"Wind Speed"}
+        title={unitSystem === "metric" ? "Vitésse du vent" : "Wind Speed"}
         iconSrc={"/icons/wind.png"}
         metric={
           unitSystem === "metric"
@@ -32,6 +33,24 @@ export const MetricsBox = ({ weatherData, unitSystem }) => {
             : mpsToMph(current.wind_speed_10m)
         }
         unit={unitSystem === "metric" ? "km/h" : "mph"}
+      />
+      <MetricsCard
+        title={
+          unitSystem === "metric" ? "Direction du vent " : "Wind Direction"
+        }
+        iconSrc={"/icons/windsock.png"}
+        metric={
+          unitSystem === "metric"
+            ? degToCompassMetric(current.wind_direction_10m)
+            : degToCompass(current.wind_direction_10m)
+        }
+        unit={""}
+      />
+      <MetricsCard
+        title={unitSystem === "metric" ? "Préssion" : "Pressure"}
+        iconSrc={"/icons/pressure.png"}
+        metric={getPressure(unitSystem, current.surface_pressure)}
+        unit={unitSystem === "metric" ? "hPa" : "inHg"}
       />
     </div>
   );

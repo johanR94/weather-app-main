@@ -31,6 +31,28 @@ export const degToCompass = (num) => {
   ];
   return arr[val % 16];
 };
+export const degToCompassMetric = (num) => {
+  var val = Math.round(num / 22.5);
+  var arr = [
+    "Nord",
+    "NNE",
+    "NE",
+    "ENE",
+    "Est",
+    "ESE",
+    "SE",
+    "SSE",
+    "Sud",
+    "SSO",
+    "SO",
+    "OSO",
+    "Ouest",
+    "ONO",
+    "NO",
+    "NNO",
+  ];
+  return arr[val % 16];
+};
 
 export const unixToLocalTime = (unixSeconds, timezone) => {
   let time = new Date((unixSeconds + timezone) * 1000)

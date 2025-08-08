@@ -27,6 +27,8 @@ export const App = () => {
       setWeatherData({ ...data });
     };
     getData();
+    const interval = setInterval(getData, 3600000); // Fetch data every hour
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
   const changeSystem = () =>

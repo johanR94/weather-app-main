@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 
   // Appel météo
   const getWeatherData = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,rain,showers,snowfall,weathercode,wind_speed_10m,cloud_cover`
+    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,wind_direction_10m,wind_speed_10m,surface_pressure`
   );
   const data = await getWeatherData.json();
 
@@ -64,6 +64,10 @@ export default async function handler(req, res) {
     feels_like: data.current.apparent_temperature,
     humidity: data.current.relative_humidity_2m,
     wind: data.current.wind_speed_10m,
+    windDirection: data.current.wind_direction_10m,
+    cloudCover: data.current.cloud_cover,
+    surfacePressure: data.current.surface_pressure,
+    pressure: data.current.surface_pressure,
     precipitation: data.current.precipitation,
     rain: data.current.rain,
     snowfall: data.current.snowfall,
